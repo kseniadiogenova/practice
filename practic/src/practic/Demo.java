@@ -24,6 +24,10 @@ class PaintPanel extends JPanel{
 		for(int i = 0; i<gr.numV; i++){
 			g.fillOval(gr.v[i].x, gr.v[i].y, gr.v[i].r, gr.v[i].r);
 		}
+		g.setColor(Color.BLACK);
+		for(int i = 0; i<gr.numV; i++){
+			g.drawString(Integer.toString(i+1), gr.v[i].x +r/2, gr.v[i].y+r/2);
+		}
 		
 	}
 }
@@ -44,6 +48,15 @@ public class Demo {
 		jfrm.add(pp, BorderLayout.CENTER);
 		jlbl = new JLabel("This is a GUI");						//Метка
 		JButton btn = new JButton("Далее");
+		//JButton file = new JButton("Выбрать файл");
+		//jfrm.add(file, BorderLayout.WEST);
+		JMenuBar menubar = new JMenuBar();
+		JMenu menu = new JMenu("Файл...");
+		JMenuItem load = new JMenuItem("Загрузить");
+		//pp.setLayout( new BorderLayout());
+		menu.add(load);
+		menubar.add(menu);
+		jfrm.setJMenuBar(menubar);
 		btn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae){
 				count++;
