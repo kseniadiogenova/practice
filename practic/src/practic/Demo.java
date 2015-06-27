@@ -16,9 +16,14 @@ class PaintPanel extends JPanel{
 		//g.drawLine(10, 20, 100, 200);
 		Graph gr = new Graph();
 		int r = gr.v[0].r;
+		gr.Kruskal();
 		g.setColor(Color.BLACK);
 		for(int i = 0; i < gr.numE; i++){
 			g.drawLine(gr.e[i].from.x+r/2, gr.e[i].from.y+r/2, gr.e[i].to.x+r/2, gr.e[i].to.y+r/2);
+		}
+		g.setColor(Color.RED);
+		for(int i = 0; i < gr.numV-1; i++){
+			g.drawLine(gr.MFT[i].from.x+r/2, gr.MFT[i].from.y+r/2, gr.MFT[i].to.x+r/2, gr.MFT[i].to.y+r/2);
 		}
 		g.setColor(Color.CYAN);
 		for(int i = 0; i<gr.numV; i++){
@@ -28,6 +33,8 @@ class PaintPanel extends JPanel{
 		for(int i = 0; i<gr.numV; i++){
 			g.drawString(Integer.toString(i+1), gr.v[i].x +r/2, gr.v[i].y+r/2);
 		}
+		
+		
 		
 	}
 }
