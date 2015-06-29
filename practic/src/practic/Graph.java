@@ -3,8 +3,8 @@ import java.io.*;
 import java.math.*;
 
 class Vertex{
-	public int x, y;	//координаты вершины
-	public int r;		//радиус круга
+	public int x, y;	//РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРµСЂС€РёРЅС‹
+	public int r;		//СЂР°РґРёСѓСЃ РєСЂСѓРіР°
 	public int num;
 	public Vertex(int x, int y, int r,int num){
 		this.x = x;
@@ -28,6 +28,7 @@ class Edge{
 public class Graph {
 	public int numV;
 	public int numE;
+	public int numM;
 	public Vertex v[];
 	public Edge e[];
 	public Edge MFT[];
@@ -81,40 +82,55 @@ public class Graph {
 			}
 		}
 	}
-	public void Kruskal(){
+	public String Kruskal(){
 		sortEdges();
+		String result = new String();
 		boolean unions[][]  = new boolean[numV][numV];
 		int counter = 0;
 		for (int j = 0; j< numV; j++){
 			unions[j][j] = true; 
 		}
 		
-		for(int i = 0; i<numE && (counter <numV-1); i++){
+		for(int i = 0; i<numE && (counter < numV-1); i++){
 			Edge help = e[i];
 			int from = e[i].from.num;
 			int to = e[i].to.num;
 			int h = -1;
-			for(int j = 0; j<numV; j++){
-				if(unions[from][j]&&j!=from)h=j;
-			}
+			int h2 = -1;
+			for(int j = 0; (j < from && h == -1); j++)
+				if(unions[from][j])
+					h=j;
+				
+			for(int j = 0; (j<to &&h2==-1); j++)
+				if(unions[to][j])
+					h2=j;
+			if(h2!=-1)to = h2;
 			if(h!=-1)from = h;
+			if(to<from){
+				h = to;
+				to = from;
+				from = h;
+			}
 			boolean diffUnions = true;
-			for(int j = 0; j< numV; j++){
-				if((unions[j][from]==unions[j][to])&&(unions[j][from] == true)){
+			for(int j = 0; j< numV && diffUnions; j++){
+				if((unions[j][from] == unions[j][to])&&(unions[j][from] == true)){
 					diffUnions = false;
-					break;
 				}
 			}
 			if(diffUnions){
 				for(int j = 0; j<numV; j++){
 					if(unions[j][to]){
 						unions[j][from] = true;
-					}					
+					}
+					//unions[j][from] = unions[j][to] = unions[j][from] || unions[j][to];
 				}
 				MFT[counter] = help;
 				counter++;
+				result+=help.from.num+"-> "+help.to.num+" ;";
 			}
 		}
+		numM = counter;
+		return result;
 		
 	}
 }

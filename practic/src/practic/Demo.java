@@ -16,14 +16,17 @@ class PaintPanel extends JPanel{
 		//g.drawLine(10, 20, 100, 200);
 		Graph gr = new Graph();
 		int r = gr.v[0].r;
-		gr.Kruskal();
+		String str = gr.Kruskal();
 		g.setColor(Color.BLACK);
 		for(int i = 0; i < gr.numE; i++){
 			g.drawLine(gr.e[i].from.x+r/2, gr.e[i].from.y+r/2, gr.e[i].to.x+r/2, gr.e[i].to.y+r/2);
+			String weight = Integer.toString(gr.e[i].weight);
+			g.drawString(weight, (gr.e[i].from.x + gr.e[i].to.x)/2, (gr.e[i].from.y + gr.e[i].to.y)/2);
 		}
 		g.setColor(Color.RED);
-		for(int i = 0; i < gr.numV-1; i++){
+		for(int i = 0; i < gr.numM; i++){
 			g.drawLine(gr.MFT[i].from.x+r/2, gr.MFT[i].from.y+r/2, gr.MFT[i].to.x+r/2, gr.MFT[i].to.y+r/2);
+			//g.drawString([i]);
 		}
 		g.setColor(Color.CYAN);
 		for(int i = 0; i<gr.numV; i++){
@@ -31,8 +34,9 @@ class PaintPanel extends JPanel{
 		}
 		g.setColor(Color.BLACK);
 		for(int i = 0; i<gr.numV; i++){
-			g.drawString(Integer.toString(i+1), gr.v[i].x +r/2, gr.v[i].y+r/2);
+			g.drawString(Integer.toString(i), gr.v[i].x +r/2, gr.v[i].y+r/2);
 		}
+		g.drawString(str, 510, 350);
 		
 		
 		
@@ -46,20 +50,20 @@ public class Demo {
 	static int count;
 	
 	Demo(){
-		JFrame jfrm = new JFrame("A Simple Application");		//ñîçäàåòñÿ êîíòåéíåð ñîäåðæàùèé îêíî
-		jfrm.setSize(1000, 700);									//Çàäàåòñÿ åãî ðàçìåð
+		JFrame jfrm = new JFrame("A Simple Application");		//ÑÐ¾Ð·Ð´Ð°ÐµÑ‚ÑÑ ÐºÐ¾Ð½Ñ‚ÐµÐ¹Ð½ÐµÑ€ ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‰Ð¸Ð¹ Ð¾ÐºÐ½Ð¾
+		jfrm.setSize(1000, 700);									//Ð·Ð°Ð´Ð°ÐµÑ‚ÑÑ ÐµÐ³Ð¾ Ñ€Ð°Ð·Ð¼ÐµÑ€
 		jfrm.setLayout(new BorderLayout());
-		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//×òîáû çàêðûâàëàñÿ íà Õ
+		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°Ð»Ð°ÑÑ Ð½Ð° 
 		jfrm.setVisible(true);			
 		pp = new PaintPanel();
 		jfrm.add(pp, BorderLayout.CENTER);
-		jlbl = new JLabel("This is a GUI");						//Ìåòêà
-		JButton btn = new JButton("Äàëåå");
-		//JButton file = new JButton("Âûáðàòü ôàéë");
+		jlbl = new JLabel("This is a GUI");						//Ð¼ÐµÑ‚ÐºÐ°
+		JButton btn = new JButton("Ð”Ð°Ð»ÐµÐµ");
+		//JButton file = new JButton("Ð’Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»");
 		//jfrm.add(file, BorderLayout.WEST);
 		JMenuBar menubar = new JMenuBar();
-		JMenu menu = new JMenu("Ôàéë...");
-		JMenuItem load = new JMenuItem("Çàãðóçèòü");
+		JMenu menu = new JMenu("Ð¤Ð°Ð¹Ð»...");
+		JMenuItem load = new JMenuItem("Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ");
 		//pp.setLayout( new BorderLayout());
 		menu.add(load);
 		menubar.add(menu);
@@ -71,9 +75,9 @@ public class Demo {
 			}
 		});
 		jfrm.add(btn, BorderLayout.SOUTH);
-		jfrm.add(jlbl, BorderLayout.NORTH);										//Äîáàâëÿåì åå â êîíòåéíåð
+		jfrm.add(jlbl, BorderLayout.NORTH);										//Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ ÐµÐµ Ð² ÐºÐ¾Ð½Ñ‚ÐµÐ¹Ð½ÐµÑ€
 		//jfrm.pack();
-								//Äåëàåì îêíî âèäèìûì
+								//Ð´ÐµÐ»Ð°ÐµÐ¼ Ð¾ÐºÐ½Ð¾ Ð²Ð¸Ð´Ð¸Ð¼Ñ‹Ð¼
 	}
 	
 	public static void main(String[] args) {
